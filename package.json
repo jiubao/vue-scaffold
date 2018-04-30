@@ -1,0 +1,33 @@
+{
+  "name": "vue-scaffold",
+  "version": "0.0.1",
+  "description": "vue webpack express",
+  "main": "index.js",
+  "scripts": {
+    "build": "rm -rf dist && npm run dev",
+    "dev": "webpack --config build/webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jiubao/vue-scaffold.git"
+  },
+  "author": "jiubao <xia.ldj@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jiubao/vue-scaffold/issues"
+  },
+  "homepage": "https://github.com/jiubao/vue-scaffold#readme",
+  "devDependencies": {
+    "express": "^4.16.3",
+    "webpack": "^4.6.0",
+    "webpack-cli": "^2.0.15"
+  },
+  "dependencies": {
+    "lazi": "^0.0.22",
+    "lodash": "^4.17.10",
+    "swipe-core": "^0.0.8",
+    "vue": "^2.5.16",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
+  }
+}
