@@ -4,8 +4,10 @@
   "description": "vue webpack express",
   "main": "index.js",
   "scripts": {
-    "build": "rm -rf dist && npm run dev",
-    "dev": "webpack --config build/webpack.config.js"
+    "serve": "node ./build/serve.js",
+    "build": "rm -rf dist && mkdir dist && cp ./index.html ./dist/ && npm run dev",
+    "dev": "rm -rf dist && webpack --config build/webpack.config.js",
+    "profile": "webpack --config build/webpack.config.js --profile --progress"
   },
   "repository": {
     "type": "git",
@@ -19,8 +21,12 @@
   "homepage": "https://github.com/jiubao/vue-scaffold#readme",
   "devDependencies": {
     "express": "^4.16.3",
+    "html-webpack-plugin": "^3.2.0",
+    "vue-loader": "^15.0.4",
+    "vue-template-compiler": "^2.5.16",
     "webpack": "^4.6.0",
-    "webpack-cli": "^2.0.15"
+    "webpack-cli": "^2.0.15",
+    "webpack-dev-middleware": "^3.1.3"
   },
   "dependencies": {
     "lazi": "^0.0.22",

@@ -1,8 +1,7 @@
 <template lang="html">
   <div class="">
-    home
+    list
   </div>
-
 </template>
 
 <script>
