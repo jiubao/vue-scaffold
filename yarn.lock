@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@jiubao/vue-validator@^0.0.18":
+  version "0.0.18"
+  resolved "http://registry.npm.taobao.org/@jiubao/vue-validator/download/@jiubao/vue-validator-0.0.18.tgz#678d551872ced4c3a8a1e1f77d1cf3efa27d796d"
+
 "@sindresorhus/is@^0.7.0":
   version "0.7.0"
   resolved "http://registry.npm.taobao.org/@sindresorhus/is/download/@sindresorhus/is-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"

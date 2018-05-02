@@ -14,4 +14,8 @@ vue webpack express
 * upload cdn: test & prod
 * project name
 * hmr
-* 
+* sub folder
+* npm run dev proj001 proj002 proj003
+* less / sass variables
+* vendor.dll
+*
