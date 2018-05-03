@@ -18,4 +18,5 @@ vue webpack express
 * npm run dev proj001 proj002 proj003
 * less / sass variables
 * vendor.dll
-*
+* eslint
+* autoprefixer
