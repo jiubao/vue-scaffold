@@ -15,6 +15,8 @@ const HardSourceWebpackPlugin = require('hard-source-webpack-plugin')
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
 
+// console.log("dev.css.loader: ", JSON.stringify(utils.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCSS: true })))
+
 const devWebpackConfig = merge(baseWebpackConfig, {
   mode: 'development',
   entry: [
@@ -26,8 +28,8 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   //   app: path.resolve(__dirname, '../src/app.js')
   // },
   output: {
-    // path: path.resolve(__dirname, '../dist'),
-    path: '/',
+    path: path.resolve(__dirname, '../dist'),
+    // path: '/',
     filename: '[name].js'
   },
   module: {

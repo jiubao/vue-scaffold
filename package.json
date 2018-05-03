@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "serve": "node ./build/serve.js",
-    "build": "rm -rf dist && mkdir dist && cp ./index.html ./dist/ && npm run dev",
+    "build": "rm -rf dist && mkdir dist && node build/build.js",
     "dev": "rm -rf dist && webpack --config build/webpack.dev.config.js",
     "profile": "webpack --config build/webpack.config.js --profile --progress"
   },
@@ -33,6 +33,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-2": "^6.24.1",
     "chalk": "^2.4.1",
+    "compression-webpack-plugin": "^1.1.11",
     "copy-webpack-plugin": "^4.5.1",
     "cross-env": "^5.1.4",
     "css-loader": "^0.28.11",
@@ -47,18 +48,24 @@
     "eslint-plugin-standard": "^3.1.0",
     "eslint-plugin-vue": "^4.5.0",
     "express": "^4.16.3",
-    "extract-text-webpack-plugin": "^3.0.2",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^1.1.11",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "hard-source-webpack-plugin": "^0.6.4",
     "html-webpack-plugin": "^3.2.0",
     "http-proxy-middleware": "^0.18.0",
+    "mini-css-extract-plugin": "^0.4.0",
     "node-notifier": "^5.2.1",
+    "optimize-css-assets-webpack-plugin": "^4.0.1",
+    "ora": "^2.1.0",
     "portfinder": "^1.0.13",
     "postcss-import": "^11.1.0",
     "postcss-loader": "^2.1.4",
     "postcss-px2remvw": "^1.0.0",
     "postcss-url": "^7.3.2",
+    "script-ext-html-webpack-plugin": "^2.0.1",
+    "semver": "^5.5.0",
+    "shelljs": "^0.8.1",
     "uglifyjs-webpack-plugin": "^1.2.5",
     "url-loader": "^1.0.1",
     "vue-loader": "^15.0.4",
@@ -79,5 +86,16 @@
     "vue": "^2.5.16",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
-  }
+  },
+  "engines": {
+    "node": ">= 6.0.0",
+    "npm": ">= 3.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8",
+    "iOS >= 8",
+    "Android >= 4.0"
+  ]
 }
