@@ -13,13 +13,13 @@ function resolve (dir) {
 
 module.exports = {
   // mode: 'development',
-  entry: {
-    app: path.resolve(__dirname, '../src/app.js')
-  },
-  output: {
-    path: path.resolve(__dirname, '../dist'),
-    filename: '[name].js'
-  },
+  // entry: {
+  //   app: path.resolve(__dirname, '../src/app.js')
+  // },
+  // output: {
+  //   path: path.resolve(__dirname, '../dist'),
+  //   filename: '[name].js'
+  // },
   module: {
     rules: [{
       test: /\.(js|vue)$/,
@@ -103,6 +103,6 @@ module.exports = {
     child_process: 'empty'
   },
   // watch: true,
-  // stats: 'minimal'
+  stats: false
   // stats: stats
 }

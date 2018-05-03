@@ -20,3 +20,4 @@ vue webpack express
 * vendor.dll
 * eslint
 * autoprefixer
+* node percentage
