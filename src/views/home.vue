@@ -12,7 +12,7 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="scss">
 * {padding: 0; margin: 0;}
 
 ::placeholder {
@@ -20,7 +20,7 @@ export default {
 }
 .head {
   font-size: 40px; /* no */
-  /* background: $color-b2; */
+  background: $color-b2;
 }
 
 img {
