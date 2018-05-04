@@ -3,9 +3,14 @@ vue webpack express
 
 ### todos
 
+* ~~sass variables~~
+* ~~vw / rem~~
+* ~~hmr~~
+* ~~vendor.dll~~
+* ~~eslint~~
+* ~~autoprefixer~~
 * vue devtool not working
 * resources: html, js, css, sass, less
-* ~~vw / rem~~
 * multi-pages
 * multi-port in dev mode
 * config pages entries
@@ -13,13 +18,8 @@ vue webpack express
 * version control: by hash for now
 * upload cdn: test & prod
 * project name
-* ~~hmr~~
 * sub folder
 * npm run dev proj001 proj002 proj003
-* ~~sass variables~~
 * less variables
-* vendor.dll
-* ~~eslint~~
-* ~~autoprefixer~~
 * node percentage
 * tracking

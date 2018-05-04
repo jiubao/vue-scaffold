@@ -103,11 +103,11 @@ const webpackConfig = merge(baseWebpackConfig, {
       }
     ]),
 
-    // // Dll
-    // new webpack.DllReferencePlugin({
-    //   context: path.resolve(__dirname, '..'),
-    //   manifest: require('../vendor-manifest.json')
-    // })
+    // Dll
+    new webpack.DllReferencePlugin({
+      context: path.resolve(__dirname, '..'),
+      manifest: require('../vendor-manifest.json')
+    })
   ]
 })
 
