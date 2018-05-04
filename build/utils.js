@@ -3,6 +3,8 @@ const path = require('path')
 const config = require('../config')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const packageConfig = require('../package.json')
+const fs = require('fs')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 exports.assetsPath = function (_path) {
   const assetsSubDirectory = process.env.NODE_ENV === 'production'
@@ -96,4 +98,51 @@ exports.createNotifierCallback = () => {
       icon: path.join(__dirname, 'logo.png')
     })
   }
+}
+
+let hasArgs = false
+const getEntries = function (pageDir, entryPath) {
+  var whiteList = undefined;
+  var blackList = undefined;
+  if (process.env.NODE_ENV === 'production') {
+    var moduleArray = process.argv.slice(2)
+    if (moduleArray.length !== 0) {
+      whiteList = moduleArray
+      hasArgs = true
+    }
+    blackList = config.build.blackList;
+  }
+
+  var entry = {};
+  var pageDirPath = path.join(__dirname, '..', pageDir);
+  fs.readdirSync(pageDirPath)
+    // 发现文件夹，就认为是页面模块
+    .filter(function (f) {
+      var isDirectory = fs.statSync(path.join(pageDirPath, f)).isDirectory();
+      if (whiteList) return whiteList.indexOf(f) > -1 && isDirectory;
+      if (blackList) return blackList.indexOf(f) === -1 && isDirectory;
+      return isDirectory;
+    })
+    .forEach(function (f) {
+      entry[path.basename(f)] = [pageDir, f, entryPath].join('/');
+    });
+  // return Object.keys(entry).map(key => entry[key]);
+  return entry;
+};
+
+exports.getEntries = getEntries
+
+exports.setMultipagePlugin = function (pageDir, entryPath, htmlOptions) {
+  const pages = getEntries(pageDir, entryPath)
+  let webpackConfig = { plugins: [] }
+  const getWebpackConfig = function (pathname) {
+    const opt = Object.assign({}, {
+      filename: pathname + '/index.html',
+      template: pages[pathname],
+      // chunks: [pathname]
+    }, htmlOptions);
+    return new HtmlWebpackPlugin(opt)
+  }
+  webpackConfig.plugins = Object.keys(pages).map(pathname => getWebpackConfig(pathname))
+  return webpackConfig
 }

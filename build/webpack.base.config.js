@@ -11,6 +11,9 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
+  // return Object.keys(entry).map(key => entry[key]);
+var entry = utils.getEntries('./src/domain', 'app.js');
+
 module.exports = {
   // mode: 'development',
   // entry: {
@@ -20,6 +23,8 @@ module.exports = {
   //   path: path.resolve(__dirname, '../dist'),
   //   filename: '[name].js'
   // },
+  // entry: Object.keys(entry).map(key => entry[key]),
+  entry,
   module: {
     rules: [{
       test: /\.(js|vue)$/,
@@ -38,6 +43,11 @@ module.exports = {
       test: /\.js$/,
       loader: 'babel-loader',
       include: [resolve('src'), resolve('test')]
+    }, {
+      test: /\.ejs$/,
+      loader: 'ejs-compiled-loader',
+      include: [resolve('src'), resolve('test')],
+      exclude: /node_modules/
     }, {
       test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
       loader: 'url-loader',
@@ -61,6 +71,12 @@ module.exports = {
       }
     }]
   },
+  plugins: [
+    new webpack.DllReferencePlugin({
+      context: path.resolve(__dirname, '..'),
+      manifest: require('../vendor-manifest.json')
+    })
+  ],
   resolve: {
     extensions: ['.js', '.json', '.vue', '.jsx', '.css'],
     alias: {
@@ -103,6 +119,6 @@ module.exports = {
     child_process: 'empty'
   },
   // watch: true,
-  stats: false
+  stats: true
   // stats: stats
 }

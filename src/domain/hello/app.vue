@@ -1,17 +1,17 @@
 <template lang="html">
-  <div class="head">
-    home 116
-
-    <img src="//imgdatabasetest.yingheying.com/80829b57ab0a4106b9c9825c63d6e065.jpeg?x-oss-process=image/format,webp" />
+  <div id="app">
+    <router-view></router-view>
   </div>
-
 </template>
 
 <script>
 export default {
+  name: 'vue-scaffold',
+  mounted () {
+    console.log('app mounted...')
+  }
 }
 </script>
-
 <style lang="scss">
 * {padding: 0; margin: 0;}
 

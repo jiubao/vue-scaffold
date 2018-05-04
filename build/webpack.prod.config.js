@@ -23,12 +23,13 @@ const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
   : require('../config/prod.env')
 
-const webpackConfig = merge(baseWebpackConfig, {
+// const webpackConfig = merge(baseWebpackConfig, {
+const webpackConfig = {
   mode: 'production',
   stats: 'normal',
-  entry: {
-    app: path.resolve(__dirname, '../src/app.js')
-  },
+  // entry: {
+  //   app: path.resolve(__dirname, '../src/app.js')
+  // },
   module: {
     rules: utils.styleLoaders({
       sourceMap: config.build.productionSourceMap,
@@ -39,8 +40,8 @@ const webpackConfig = merge(baseWebpackConfig, {
   devtool: config.build.productionSourceMap ? config.build.devtool : false,
   output: {
     path: config.build.assetsRoot,
-    filename: utils.assetsPath('js/[name].[chunkhash].js'),
-    chunkFilename: utils.assetsPath('js/[id].[chunkhash].js'),
+    filename: utils.assetsPath('[name]/[name].[chunkhash].js'),
+    chunkFilename: utils.assetsPath('[name]/[id].[chunkhash].js'),
     crossOriginLoading: 'anonymous'
   },
   optimization: {
@@ -103,13 +104,13 @@ const webpackConfig = merge(baseWebpackConfig, {
       }
     ]),
 
-    // Dll
-    new webpack.DllReferencePlugin({
-      context: path.resolve(__dirname, '..'),
-      manifest: require('../vendor-manifest.json')
-    })
+    // // Dll
+    // new webpack.DllReferencePlugin({
+    //   context: path.resolve(__dirname, '..'),
+    //   manifest: require('../vendor-manifest.json')
+    // })
   ]
-})
+}
 
 // Upload static to ali oss
 if (config.build.uploadToAliOSS) {
@@ -164,4 +165,22 @@ if (config.build.bundleAnalyzerReport) {
   webpackConfig.plugins.push(new BundleAnalyzerPlugin())
 }
 
-module.exports = webpackConfig
+const multiHtmlConfig = utils.setMultipagePlugin('./src/domain/', 'index.ejs', {
+  inject: true,
+  // minify: {
+  //   removeComments: true,
+  //   collapseWhitespace: true,
+  //   removeAttributeQuotes: true,
+  //   minifyJS: true,
+  //   minifyCSS: true,
+  //   // more options:
+  //   // https://github.com/kangax/html-minifier#options-quick-reference
+  // },
+  // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+  // chunksSortMode: 'auto',
+  // env: config.dev.env,
+  // cnzzsiteid: config.build.cnzzsiteid
+})
+
+// module.exports = merge(baseWebpackConfig, multiHtmlConfig, webpackConfig)
+module.exports = merge(baseWebpackConfig, webpackConfig)

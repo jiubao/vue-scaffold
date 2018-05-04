@@ -16,33 +16,38 @@ const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
 
 // console.log("dev.css.loader: ", JSON.stringify(utils.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCSS: true })))
+// console.log("webpack.config.base.entry: ", JSON.stringify(baseWebpackConfig.entry))
 
-const devWebpackConfig = merge(baseWebpackConfig, {
+const devWebpackConfig = {
   mode: 'development',
-  entry: [
-    'webpack/hot/dev-server',
-    'webpack-hot-middleware/client',
-    path.resolve(__dirname, '../src/app.js')
-  ],
+  // entry: [
+  //   'webpack/hot/dev-server',
+  //   'webpack-hot-middleware/client'
+  //   // path.resolve(__dirname, '../src/app.js')
+  // ],
   // entry: {
+  //   'webpack/hot/dev-server': 'webpack/hot/dev-server',
+  //   'webpack-hot-middleware/client': 'webpack-hot-middleware/client',
   //   app: path.resolve(__dirname, '../src/app.js')
   // },
   output: {
     path: path.resolve(__dirname, '../dist'),
     // path: '/',
-    filename: '[name].js'
+    filename: '[name]/[name].js',
+    // chunkFilename: utils.assetsPath('[name]/[id].[chunkhash].js'),
+    chunkFilename: function (file) {
+      console.log('chunk file: ', file)
+      // return utils.assetsPath('[name]/[id].[chunkhash].js')
+    }
+
+    // filename: utils.assetsPath('[name]/[name].[chunkhash].js'),
+    // chunkFilename: utils.assetsPath('[name]/[id].[chunkhash].js'),
   },
   module: {
     rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCSS: true })
   },
   // cheap-module-eval-source-map is faster for development
   devtool: config.dev.devtool,
-
-  // devOptions: {
-  //   publishPath: config.dev.assetsPublicPath,
-  //   stats: false,
-  //   port: PORT || config.dev.port
-  // },
 
   // these devServer options should be customized in /config/index.js
   // devServer: {
@@ -77,14 +82,14 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
     new webpack.NoEmitOnErrorsPlugin(),
     new VueLoaderPlugin(),
-    // https://github.com/ampedandwired/html-webpack-plugin
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: path.resolve(__dirname, '../index.html'),
-      inject: true,
-      // cnzzsiteid: '1273504169'
-      cnzzsiteid: config.build.cnzzsiteid
-    }),
+    // // https://github.com/ampedandwired/html-webpack-plugin
+    // new HtmlWebpackPlugin({
+    //   filename: 'index.html',
+    //   template: path.resolve(__dirname, '../index.html'),
+    //   inject: true,
+    //   // cnzzsiteid: '1273504169'
+    //   cnzzsiteid: config.build.cnzzsiteid
+    // }),
     // copy custom static assets
     new CopyWebpackPlugin([
       {
@@ -96,15 +101,29 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       //   to: config.dev.assetsSubDirectory
       }
     ]),
-
-    // Dll
-    // new webpack.DllReferencePlugin({
-    //   context: path.resolve(__dirname, '..'),
-    //   manifest: require('./libs-manifest.json')
-    // }),
     // new HardSourceWebpackPlugin()
   ]
-})
+};
+
+var multiHtmlConfig = utils.setMultipagePlugin('./src/domain/', 'index.ejs', {
+    inject: true,
+    // minify: {
+    //   removeComments: true,
+    //   collapseWhitespace: true,
+    //   removeAttributeQuotes: true,
+    //   minifyJS: true,
+    //   minifyCSS: true,
+    //   // more options:
+    //   // https://github.com/kangax/html-minifier#options-quick-reference
+    // },
+    // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+    // chunksSortMode: 'auto',
+    // env: config.dev.env,
+    cnzzsiteid: config.build.cnzzsiteid
+  })
 
 
-module.exports = devWebpackConfig
+// console.log("webpack.config.entry: ", JSON.stringify(devWebpackConfig.entry))
+// console.log("webpack.config: ", JSON.stringify(devWebpackConfig))
+
+module.exports = merge(baseWebpackConfig, multiHtmlConfig, devWebpackConfig)

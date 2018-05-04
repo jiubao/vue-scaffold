@@ -7,7 +7,8 @@
     "serve": "node ./build/serve.js",
     "build": "rm -rf dist && mkdir dist && node build/build.js",
     "dev": "rm -rf dist && webpack --config build/webpack.dev.config.js",
-    "profile": "webpack --config build/webpack.config.js --profile --progress"
+    "profile": "webpack --config build/webpack.config.js --profile --progress",
+    "start": "npm run dev"
   },
   "repository": {
     "type": "git",
@@ -40,6 +41,7 @@
     "copy-webpack-plugin": "^4.5.1",
     "cross-env": "^5.1.4",
     "css-loader": "^0.28.11",
+    "ejs-compiled-loader": "^1.1.0",
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
     "eslint-friendly-formatter": "^4.0.1",
@@ -78,6 +80,7 @@
     "shelljs": "^0.8.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
+    "uglify-js": "^3.3.23",
     "uglifyjs-webpack-plugin": "^1.2.5",
     "url-loader": "^1.0.1",
     "vue-jest": "^2.5.0",
