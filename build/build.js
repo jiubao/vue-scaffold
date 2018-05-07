@@ -11,14 +11,23 @@ const webpack = require('webpack')
 const config = require('../config')
 const webpackConfig = require('./webpack.prod.config')
 
+if (process.argv.length < 3) {
+  console.log(chalk.red('  Build failed!'))
+  console.log(chalk.red('  Please specify project name(s).'))
+  console.log(chalk.yellow('  (e.g.: npm run build hello)\n'))
+  return
+}
+
 const spinner = ora('building for production...')
 spinner.start()
 
-rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
-  if (err) {
-    console.log('err!!: ', err)
-    throw err
-  }
+// TODO: rm generating project files, don't effect other folders
+// rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
+//   if (err) {
+//     console.log('err!!: ', err)
+//     throw err
+//   }
+
   webpack(webpackConfig, (err, stats) => {
     spinner.stop()
     if (err) throw err
@@ -41,4 +50,5 @@ rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
       '  Opening index.html over file:// won\'t work.\n'
     ))
   })
-})
+
+// })

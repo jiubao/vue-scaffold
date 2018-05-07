@@ -6,25 +6,23 @@ const utils = require('./utils.js');
 const vueLoaderConfig = require('./vue-loader.config.js');
 const {VueLoaderPlugin} = require('vue-loader');
 const stats = require('./stats.js');
+const config = require('../config')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
-  // return Object.keys(entry).map(key => entry[key]);
+const domainPath = path.join(__dirname, '..', 'src', 'domain')
+
+function relative (dir) {
+  var tmp = path.dirname(path.relative(domainPath, dir))
+  // fetch domain name
+  return tmp.split(path.sep)[0]
+}
+
 var entry = utils.getEntries('./src/domain', 'app.js');
 
 module.exports = {
-  // mode: 'development',
-  // entry: {
-  //   app: path.resolve(__dirname, '../src/app.js')
-  // },
-  // output: {
-  //   path: path.resolve(__dirname, '../dist'),
-  //   filename: '[name].js'
-  // },
-  // entry: Object.keys(entry).map(key => entry[key]),
-  entry,
   module: {
     rules: [{
       test: /\.(js|vue)$/,
@@ -53,59 +51,31 @@ module.exports = {
       loader: 'url-loader',
       options: {
         limit: 1000,
-        name: utils.assetsPath('img/[name].[hash:7].[ext]')
+        name: file => relative(file) + '/static/img/[name].[hash:7].[ext]'
       }
     }, {
       test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
       loader: 'url-loader',
       options: {
         limit: 1000,
-        name: utils.assetsPath('media/[name].[hash:7].[ext]')
+        name: file => relative(file) + '/static/media/[name].[hash:7].[ext]'
       }
     }, {
       test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
       loader: 'url-loader',
       options: {
         limit: 1000,
-        name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
+        name: file => relative(file) + '/static/fonts/[name].[hash:7].[ext]'
       }
     }]
   },
-  plugins: [
-    new webpack.DllReferencePlugin({
-      context: path.resolve(__dirname, '..'),
-      manifest: require('../vendor-manifest.json')
-    })
-  ],
   resolve: {
-    extensions: ['.js', '.json', '.vue', '.jsx', '.css'],
+    extensions: ['.js', '.json', '.vue', '.jsx', '.css', '.scss'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': path.resolve(__dirname, '../src/')
     }
   },
-  optimization: {
-    // runtimeChunk: 'single',
-    splitChunks: {
-      minSize: 10000,
-      cacheGroups: {
-        vendors: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          enforce: true,
-          chunks: 'all'
-        }
-      }
-    }
-  },
-  // devtool: 'source-map',
-  // plugins: [
-  //   new VueLoaderPlugin(),
-  //   new HtmlWebpackPlugin({
-  //     inject: true,
-  //     template: path.resolve(__dirname, '../index.html')
-  //   })
-  // ],
   node: {
     // prevent webpack from injecting useless setImmediate polyfill because Vue
     // source contains it (although only uses it if it's native).
@@ -118,7 +88,5 @@ module.exports = {
     tls: 'empty',
     child_process: 'empty'
   },
-  // watch: true,
-  stats: true
-  // stats: stats
+  stats
 }

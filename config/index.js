@@ -8,8 +8,10 @@ module.exports = {
   dev: {
 
     // Paths
-    assetsSubDirectory: 'static',
+    assetsRoot: path.resolve(__dirname, '../dist'),
+    assetsSubDirectory: '__shared__',
     assetsPublicPath: '/',
+    chunksPath: '__shared__/js/vendors',
     proxyTable: {},
 
     // Various Dev Server settings
@@ -33,7 +35,9 @@ module.exports = {
      */
 
     // https://webpack.js.org/configuration/devtool/#development
-    devtool: 'cheap-module-eval-source-map',
+    // devtool: 'cheap-module-eval-source-map',
+    devtool: 'eval-source-map',
+    // devtool: '#source-map',
 
     // If you have problems debugging vue-files in devtools,
     // set this to false - it *may* help
@@ -51,8 +55,9 @@ module.exports = {
 
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: 'static',
-    assetsPublicPath: process.env.YHY_ENV === 'prod' ? '//shadow.yingheying.com/assets/h5/' : '/alauda/',
+    assetsSubDirectory: '__shared__',
+    assetsPublicPath: process.env.YHY_ENV === 'prod' ? '//shadow.yingheying.com/assets/' : '/',
+    chunksPath: '__shared__/js/vendors',
 
     /**
      * Source Maps

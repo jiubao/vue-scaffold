@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'vue-scaffold',
+  name: 'yhy-h5-demo',
   mounted () {
     console.log('app mounted...')
   }

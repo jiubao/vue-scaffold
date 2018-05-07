@@ -7,29 +7,24 @@ const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.config')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-// const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const {VueLoaderPlugin} = require('vue-loader');
 
-// console.log("dev.css.loader: ", JSON.stringify(utils.styleLoaders({
-//   sourceMap: config.build.productionSourceMap,
-//   extract: true,
-//   usePostCSS: true
-// })))
-
 const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
   : require('../config/prod.env')
 
-// const webpackConfig = merge(baseWebpackConfig, {
+var count = 0;
+
+var domains = process.argv.slice(2).sort((a, b) => a > b)
+var asyncBase = domains.join('~') + '/static/'
+
 const webpackConfig = {
   mode: 'production',
-  stats: 'normal',
-  // entry: {
-  //   app: path.resolve(__dirname, '../src/app.js')
-  // },
+  entry: utils.getEntries('./src/domain', 'app.js'),
+  stats: false,
   module: {
     rules: utils.styleLoaders({
       sourceMap: config.build.productionSourceMap,
@@ -40,11 +35,37 @@ const webpackConfig = {
   devtool: config.build.productionSourceMap ? config.build.devtool : false,
   output: {
     path: config.build.assetsRoot,
-    filename: utils.assetsPath('[name]/[name].[chunkhash].js'),
-    chunkFilename: utils.assetsPath('[name]/[id].[chunkhash].js'),
+    publicPath: config.build.assetsPublicPath,
+    filename: '[name]/static/js/[name].[chunkhash].js',
+    chunkFilename: asyncBase + 'js/[id].[chunkhash].js',
     crossOriginLoading: 'anonymous'
   },
   optimization: {
+    namedChunks: true,
+    // "noEmitOnErrors": true,
+    // 'runtimeChunk': {
+    //   name: 'runtime'
+    // },
+    splitChunks: {
+      chunks: "async",
+      minSize: 30000,
+      minChunks: 1,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      automaticNameDelimiter: '~',
+      name: true,
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true
+        },
+      }
+    },
     minimizer: [
       new UglifyJsPlugin({
         cache: true,
@@ -68,47 +89,27 @@ const webpackConfig = {
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
-      filename: utils.assetsPath('css/[name].[hash].css'),
-      chunkFilename: utils.assetsPath("css/[id].[hash].css")
-    }),
-    // generate dist index.html with correct asset hash for caching.
-    // you can customize output by editing /index.html
-    // see https://github.com/ampedandwired/html-webpack-plugin
-    new HtmlWebpackPlugin({
-      filename: process.env.NODE_ENV === 'testing'
-        ? 'index.html'
-        : config.build.index,
-      template: 'index.html',
-      inject: true,
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeAttributeQuotes: true
-        // more options:
-        // https://github.com/kangax/html-minifier#options-quick-reference
-      },
-      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-      chunksSortMode: 'dependency',
-      cnzzsiteid: config.build.cnzzsiteid
+      filename: '[name]/static/css/[name].[hash].css',
+      chunkFilename: asyncBase + 'css/[id].[hash].css',
     }),
     // keep module.id stable when vendor modules does not change
     new webpack.HashedModuleIdsPlugin(),
     // enable scope hoisting
     new webpack.optimize.ModuleConcatenationPlugin(),
     // copy custom static assets
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(__dirname, '../static'),
-        to: config.build.assetsSubDirectory,
-        ignore: ['.*']
-      }
-    ]),
+    // new CopyWebpackPlugin([
+    //   {
+    //     from: path.resolve(__dirname, '../static'),
+    //     to: config.build.assetsSubDirectory,
+    //     ignore: ['.*']
+    //   }
+    // ]),
 
-    // // Dll
-    // new webpack.DllReferencePlugin({
-    //   context: path.resolve(__dirname, '..'),
-    //   manifest: require('../vendor-manifest.json')
-    // })
+    // Dll
+    new webpack.DllReferencePlugin({
+      context: path.resolve(__dirname, '..'),
+      manifest: require('../vendor-manifest.json')
+    })
   ]
 }
 
@@ -119,7 +120,7 @@ if (config.build.uploadToAliOSS) {
   webpackConfig.plugins.push(
     new AliossWebpackPlugin({
       ossOptions: config.build.ossOptions,
-      prefix: 'assets/h5',
+      prefix: 'assets/',
       exclude: /.*\.html$/,
       enableLog: true,
       deleteMode: false
@@ -167,20 +168,19 @@ if (config.build.bundleAnalyzerReport) {
 
 const multiHtmlConfig = utils.setMultipagePlugin('./src/domain/', 'index.ejs', {
   inject: true,
-  // minify: {
-  //   removeComments: true,
-  //   collapseWhitespace: true,
-  //   removeAttributeQuotes: true,
-  //   minifyJS: true,
-  //   minifyCSS: true,
-  //   // more options:
-  //   // https://github.com/kangax/html-minifier#options-quick-reference
-  // },
+  minify: {
+    removeComments: true,
+    collapseWhitespace: true,
+    removeAttributeQuotes: true,
+    minifyJS: true,
+    minifyCSS: true,
+    // more options:
+    // https://github.com/kangax/html-minifier#options-quick-reference
+  },
   // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-  // chunksSortMode: 'auto',
-  // env: config.dev.env,
-  // cnzzsiteid: config.build.cnzzsiteid
+  chunksSortMode: 'auto',
+  env: config.dev.env,
+  cnzzsiteid: config.build.cnzzsiteid
 })
 
-// module.exports = merge(baseWebpackConfig, multiHtmlConfig, webpackConfig)
-module.exports = merge(baseWebpackConfig, webpackConfig)
+module.exports = merge(baseWebpackConfig, multiHtmlConfig, webpackConfig)

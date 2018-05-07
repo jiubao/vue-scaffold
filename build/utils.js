@@ -101,17 +101,21 @@ exports.createNotifierCallback = () => {
 }
 
 let hasArgs = false
-const getEntries = function (pageDir, entryPath) {
+const getEntries = function (pageDir, entryPath, hot) {
+  // console.log('args0: ', process.argv)
   var whiteList = undefined;
   var blackList = undefined;
-  if (process.env.NODE_ENV === 'production') {
+  // if (process.env.NODE_ENV === 'production') {
     var moduleArray = process.argv.slice(2)
-    if (moduleArray.length !== 0) {
+    if (moduleArray.length !== 0 && moduleArray[0] != '--config') {
       whiteList = moduleArray
       hasArgs = true
     }
     blackList = config.build.blackList;
-  }
+
+    // console.log('white: ', whiteList)
+    // console.log('black: ', blackList)
+  // }
 
   var entry = {};
   var pageDirPath = path.join(__dirname, '..', pageDir);
@@ -119,12 +123,14 @@ const getEntries = function (pageDir, entryPath) {
     // 发现文件夹，就认为是页面模块
     .filter(function (f) {
       var isDirectory = fs.statSync(path.join(pageDirPath, f)).isDirectory();
+      // console.log('tt: ', whiteList.indexOf(f) > -1 && isDirectory)
       if (whiteList) return whiteList.indexOf(f) > -1 && isDirectory;
       if (blackList) return blackList.indexOf(f) === -1 && isDirectory;
       return isDirectory;
     })
     .forEach(function (f) {
-      entry[path.basename(f)] = [pageDir, f, entryPath].join('/');
+      var _path = [pageDir, f, entryPath].join('/')
+      entry[path.basename(f)] = hot ? [_path].concat(hot) : _path
     });
   // return Object.keys(entry).map(key => entry[key]);
   return entry;
@@ -139,7 +145,7 @@ exports.setMultipagePlugin = function (pageDir, entryPath, htmlOptions) {
     const opt = Object.assign({}, {
       filename: pathname + '/index.html',
       template: pages[pathname],
-      // chunks: [pathname]
+      chunks: [pathname]
     }, htmlOptions);
     return new HtmlWebpackPlugin(opt)
   }

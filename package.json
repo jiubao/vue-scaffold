@@ -1,25 +1,21 @@
 {
-  "name": "vue-scaffold",
+  "name": "owl",
   "version": "0.0.1",
   "description": "vue webpack express",
   "main": "index.js",
   "scripts": {
+    "profile": "webpack --config build/webpack.config.js --profile --progress",
     "serve": "node ./build/serve.js",
     "build": "rm -rf dist && mkdir dist && node build/build.js",
-    "dev": "rm -rf dist && webpack --config build/webpack.dev.config.js",
-    "profile": "webpack --config build/webpack.config.js --profile --progress",
-    "start": "npm run dev"
+    "dev": "node ./build/serve.js",
+    "start": "npm run dev",
+    "test": "webpack --config build/webpack.prod.config.js"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jiubao/vue-scaffold.git"
+    "type": "git"
   },
   "author": "jiubao <xia.ldj@gmail.com>",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/jiubao/vue-scaffold/issues"
-  },
-  "homepage": "https://github.com/jiubao/vue-scaffold#readme",
   "devDependencies": {
     "alioss-webpack-plugin": "^1.0.0",
     "autoprefixer": "^8.4.1",
@@ -30,6 +26,7 @@
     "babel-loader": "^7.1.4",
     "babel-plugin-dynamic-import-node": "^1.2.0",
     "babel-plugin-import": "^1.7.0",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-plugin-syntax-jsx": "^6.18.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "babel-plugin-transform-runtime": "^6.23.0",
@@ -41,6 +38,7 @@
     "copy-webpack-plugin": "^4.5.1",
     "cross-env": "^5.1.4",
     "css-loader": "^0.28.11",
+    "del": "^3.0.0",
     "ejs-compiled-loader": "^1.1.0",
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
@@ -53,6 +51,7 @@
     "eslint-plugin-standard": "^3.1.0",
     "eslint-plugin-vue": "^4.5.0",
     "express": "^4.16.3",
+    "favicons-webpack-plugin": "^0.0.9",
     "file-loader": "^1.1.11",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "hard-source-webpack-plugin": "^0.6.4",
@@ -87,7 +86,6 @@
     "vue-loader": "^15.0.4",
     "vue-style-loader": "^4.1.0",
     "vue-template-compiler": "^2.5.16",
-    "webpack": "^4.6.0",
     "webpack-bundle-analyzer": "^2.11.1",
     "webpack-cli": "^2.0.15",
     "webpack-dev-middleware": "^3.1.3",
@@ -96,12 +94,14 @@
   },
   "dependencies": {
     "@jiubao/vue-validator": "^0.0.18",
+    "axios": "^0.18.0",
     "lazi": "^0.0.22",
     "lodash": "^4.17.10",
     "swipe-core": "^0.0.8",
     "vue": "^2.5.16",
     "vue-router": "^3.0.1",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "webpack": "^4.7.0"
   },
   "engines": {
     "node": ">= 6.0.0",

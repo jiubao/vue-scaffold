@@ -23,7 +23,4 @@ export default {
   background: $color-b2;
 }
 
-img {
-  width: 750px;
-}
 </style>
