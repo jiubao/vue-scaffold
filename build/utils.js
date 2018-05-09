@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const packageConfig = require('../package.json')
 const fs = require('fs')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const getLessVariables = require('./get-less-variables')
 
 exports.assetsPath = function (_path) {
   const assetsSubDirectory = process.env.NODE_ENV === 'production'
@@ -53,7 +54,9 @@ exports.cssLoaders = function (options) {
   return {
     css: generateLoaders(),
     postcss: generateLoaders(),
-    less: generateLoaders('less'),
+    less: generateLoaders('less', {
+      globalVars: getLessVariables(path.join(__dirname, '../src/styles/vars.less'))
+    }),
     sass: generateLoaders('sass', { indentedSyntax: true }),
     scss: generateLoaders('sass').concat({
       loader: 'sass-resources-loader',
@@ -142,10 +145,15 @@ exports.setMultipagePlugin = function (pageDir, entryPath, htmlOptions) {
   const pages = getEntries(pageDir, entryPath)
   let webpackConfig = { plugins: [] }
   const getWebpackConfig = function (pathname) {
+    var cnzzsite = packageConfig.yhytrace[pathname];
+    var cnzzsiteid = cnzzsite ? cnzzsite[process.env.YHY_ENV === 'prod' ? 'prod' : 'dev'] : ''
     const opt = Object.assign({}, {
       filename: pathname + '/index.html',
       template: pages[pathname],
-      chunks: [pathname]
+      chunks: [pathname],
+      cnzzsiteid,
+      inject: true,
+      favicon: path.resolve(__dirname, '../favicon.ico')
     }, htmlOptions);
     return new HtmlWebpackPlugin(opt)
   }

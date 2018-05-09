@@ -14,4 +14,11 @@ const router = new Router({
   }]
 })
 
+router.beforeEach((to, from, next) => {
+  /* add pageview trace */
+  Vue.prototype.$trace.pageview(`/demo/#${to.path}`, from.path === '/' ? '' : `/demo/#${from.path}`)
+
+  next()
+})
+
 export default router

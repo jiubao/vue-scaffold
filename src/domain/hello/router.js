@@ -4,8 +4,6 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-console.log('aaa')
-
 const asyncLoad = (name) => import(`./views/${name}`)
 // const asyncLoad = (name) => import(`./views/${name}`)
 

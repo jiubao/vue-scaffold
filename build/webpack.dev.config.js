@@ -65,6 +65,6 @@ const devWebpackConfig = {
   ]
 };
 
-var multiHtmlConfig = utils.setMultipagePlugin('./src/domain/', 'index.ejs', { inject: true })
+var multiHtmlConfig = utils.setMultipagePlugin('./src/domain/', 'index.ejs');
 
 module.exports = merge(baseWebpackConfig, multiHtmlConfig, devWebpackConfig)

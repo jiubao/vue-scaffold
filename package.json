@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "profile": "webpack --config build/webpack.config.js --profile --progress",
+    "unit": "jest --config test/unit/jest.conf.js --coverage",
     "serve": "node ./build/serve.js",
-    "build": "rm -rf dist && mkdir dist && node build/build.js",
+    "build": "node build/build.js",
     "dev": "node ./build/serve.js",
     "start": "npm run dev",
-    "test": "webpack --config build/webpack.prod.config.js"
+    "test": "npm run unit"
   },
   "repository": {
     "type": "git"
@@ -34,6 +35,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-2": "^6.24.1",
     "chalk": "^2.4.1",
+    "clean-webpack-plugin": "^0.1.19",
     "compression-webpack-plugin": "^1.1.11",
     "copy-webpack-plugin": "^4.5.1",
     "cross-env": "^5.1.4",
@@ -86,10 +88,12 @@
     "vue-loader": "^15.0.4",
     "vue-style-loader": "^4.1.0",
     "vue-template-compiler": "^2.5.16",
+    "webpack": "^4.8.1",
     "webpack-bundle-analyzer": "^2.11.1",
     "webpack-cli": "^2.0.15",
     "webpack-dev-middleware": "^3.1.3",
     "webpack-hot-middleware": "^2.22.1",
+    "webpack-manifest-plugin": "^2.0.2",
     "webpack-merge": "^4.1.2"
   },
   "dependencies": {
@@ -100,8 +104,7 @@
     "swipe-core": "^0.0.8",
     "vue": "^2.5.16",
     "vue-router": "^3.0.1",
-    "vuex": "^3.0.1",
-    "webpack": "^4.7.0"
+    "vuex": "^3.0.1"
   },
   "engines": {
     "node": ">= 6.0.0",
@@ -113,5 +116,31 @@
     "not ie <= 8",
     "iOS >= 8",
     "Android >= 4.0"
-  ]
+  ],
+  "yhytrace": {
+    "demo": {
+      "dev": "1273504169",
+      "prod": "1273504169"
+    },
+    "hello": {
+      "dev": "1273504169",
+      "prod": "1273504169"
+    },
+    "alauda": {
+      "dev": "1273504169",
+      "prod": "1273472089"
+    },
+    "Integralfission": {
+      "dev": "1273538782",
+      "prod": "1273538809"
+    },
+    "pedometer": {
+      "dev": "1273539106",
+      "prod": "1273539118"
+    },
+    "lullula": {
+      "dev": "1273504169",
+      "prod": "1273472089"
+    }
+  }
 }

@@ -48,17 +48,21 @@ vconsole
 * ~~rm test codes~~
 * ~~build html webpack plugin optimize~~
 * ~~upload cdn: test & prod~~
-* less variables
-* tracking
-* unit test
+* ~~vconsole~~
+* ~~favicon~~
+* ~~tracking~~
+* ~~demo-vconsole~~
+* ~~unit test~~
+* ~~less variables~~
 * api
-* vconsole
 * native
 * common modules: not pack in Dll (vconsole, swipe-core, validator, lazi)
 * common modules: pack in Dll (api, native)
 * node percentage
 * cross-env HOST=0.0.0.0
 * support npm run build --report
+* <z-img>
+* lazi
 
 ### Pendings
 

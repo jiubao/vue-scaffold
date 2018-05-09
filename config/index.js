@@ -11,7 +11,6 @@ module.exports = {
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: '__shared__',
     assetsPublicPath: '/',
-    chunksPath: '__shared__/js/vendors',
     proxyTable: {},
 
     // Various Dev Server settings
@@ -57,7 +56,6 @@ module.exports = {
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: '__shared__',
     assetsPublicPath: process.env.YHY_ENV === 'prod' ? '//shadow.yingheying.com/assets/' : '/',
-    chunksPath: '__shared__/js/vendors',
 
     /**
      * Source Maps

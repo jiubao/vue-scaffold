@@ -10,6 +10,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+const ManifestPlugin = require('webpack-manifest-plugin');
 const {VueLoaderPlugin} = require('vue-loader');
 
 const env = process.env.NODE_ENV === 'testing'
@@ -81,6 +83,9 @@ const webpackConfig = {
   },
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
+    new CleanWebpackPlugin([domains.join('~')], {
+      root: path.resolve(__dirname, '../dist')
+    }),
     new webpack.DefinePlugin({
       'process.env': env
     }),
@@ -109,7 +114,9 @@ const webpackConfig = {
     new webpack.DllReferencePlugin({
       context: path.resolve(__dirname, '..'),
       manifest: require('../vendor-manifest.json')
-    })
+    }),
+
+    new ManifestPlugin()
   ]
 }
 
@@ -167,7 +174,6 @@ if (config.build.bundleAnalyzerReport) {
 }
 
 const multiHtmlConfig = utils.setMultipagePlugin('./src/domain/', 'index.ejs', {
-  inject: true,
   minify: {
     removeComments: true,
     collapseWhitespace: true,
@@ -180,7 +186,6 @@ const multiHtmlConfig = utils.setMultipagePlugin('./src/domain/', 'index.ejs', {
   // necessary to consistently work with multiple chunks via CommonsChunkPlugin
   chunksSortMode: 'auto',
   env: config.dev.env,
-  cnzzsiteid: config.build.cnzzsiteid
 })
 
 module.exports = merge(baseWebpackConfig, multiHtmlConfig, webpackConfig)
