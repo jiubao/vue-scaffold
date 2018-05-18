@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import helper from '@/helpers/router'
 
 Vue.use(Router)
 
@@ -11,14 +12,32 @@ const router = new Router({
     meta: {
       title: 'index'
     }
-  }]
+  }, {
+    path: '/countdown',
+    name: 'count-down',
+    component: () => import('./views/countdown.vue'),
+    meta: {
+      title: 'count down',
+      auth: true
+    }
+  }, {
+    path: '/api',
+    name: 'api',
+    component: () => import('./views/api.vue'),
+    meta: {
+      title: 'api'
+    }
+  }, ...helper.routes.auth]
 })
 
 router.beforeEach((to, from, next) => {
-  /* add pageview trace */
-  Vue.prototype.$trace.pageview(`/demo/#${to.path}`, from.path === '/' ? '' : `/demo/#${from.path}`)
-
+  document.title = to.meta.title
+  helper.before(to, from, next).trace().auth()
   next()
+})
+
+router.afterEach((to, from, next) => {
+  helper.after(to, from, next).login()
 })
 
 export default router

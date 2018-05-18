@@ -10,6 +10,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
 const {VueLoaderPlugin} = require('vue-loader');
+const WebpackBar = require('webpackbar');
 
 // const HardSourceWebpackPlugin = require('hard-source-webpack-plugin')
 // TODO: favicon plugin is supper slow and have config bugs, add a single task to handle it
@@ -42,6 +43,7 @@ const devWebpackConfig = {
     new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
     new webpack.NoEmitOnErrorsPlugin(),
     new VueLoaderPlugin(),
+    new WebpackBar(),
     // copy custom static assets
     // new CopyWebpackPlugin([
     //   {

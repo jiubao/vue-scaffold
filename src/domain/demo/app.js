@@ -4,8 +4,10 @@ import App from './app.vue'
 import trace from '@/plugins/trace'
 import vconsole from '@/plugins/vconsole'
 
-/* add trace plugin */
-Vue.use(trace)
+process.env.NODE_ENV === 'production' || console.log('Looks like we are in development mode!')
+
+/* add trace plugin, specify project name */
+Vue.use(trace, {project: 'yhy-owl-demo'})
 
 /* add vconsole plugin */
 Vue.use(vconsole)

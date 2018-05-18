@@ -12,12 +12,17 @@
 <script>
 import _ from 'lodash'
 import lazi from 'lazi'
+import validator from '@jiubao/vue-validator/dist/vue-validator.es'
 
 export default {
   mounted () {
     console.log('aaa.bbb')
     console.log('lodash: ', _)
     console.log(lazi)
+    var o1 = Object.assign({}, {a: 2}, {b: 3})
+    console.log(o1)
+    console.log([1, 2, 3].includes(1))
+    console.log(validator)
   }
 }
 </script>

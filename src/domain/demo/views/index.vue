@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="back-color font wrap">
     demo page
-    <button type="button" name="button" @click="$trace('demo-event-trace')">trigger a trace</button>
+    <button type="button" name="button" @click="$trace('demo-event-trace', {a: 'asfs', b: 2})">trigger a trace</button>
   </div>
 
 </template>

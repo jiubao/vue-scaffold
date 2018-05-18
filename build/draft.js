@@ -36,6 +36,45 @@ var webpackConfig = require('./webpack.dev.config.js');
     //   }
     // ]
 
+// rules: [{
+//   test: /\.css$/,
+//   use: [
+//     // MiniCssExtractPlugin.loader,
+//     'vue-style-loader',
+//     {
+//       loader: 'css-loader',
+//       options: {
+//         sourceMap: true
+//       }
+//     },
+//     {
+//       loader: 'postcss-loader',
+//       options: {
+//         sourceMap: true
+//       }
+//     }
+//   ]
+// }, {
+//   test: /\.postcss$/,
+//   use: [
+//     // MiniCssExtractPlugin.loader,
+//     'vue-style-loader',
+//     {
+//       loader: 'css-loader',
+//       options: {
+//         sourceMap: true
+//       }
+//     },
+//     {
+//       loader: 'postcss-loader',
+//       options: {
+//         sourceMap: true
+//       }
+//     }
+//   ]
+// }]
+
+
       // cacheGroups: {
       //
       //   // Create a commons chunk, which includes all code shared between entry points.

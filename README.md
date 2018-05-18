@@ -54,8 +54,11 @@ vconsole
 * ~~demo-vconsole~~
 * ~~unit test~~
 * ~~less variables~~
+* ~~count down~~
+* constants
 * api
 * native
+* loading
 * common modules: not pack in Dll (vconsole, swipe-core, validator, lazi)
 * common modules: pack in Dll (api, native)
 * node percentage
@@ -63,6 +66,18 @@ vconsole
 * support npm run build --report
 * <z-img>
 * lazi
+* mock
+* svg icon
+* async load <script>
+* rem/vw postcss plugin & scripts merged in html
+* verify tree shaking
+* vuex multi modules
+* vuex strict mode
+* login (support call back)
+* add global version var
+* move eslint out of base
+* login: rm wx.vue, ali.vue
+* support skeleton by router & skeleton.svg
 
 ### Pendings
 
@@ -71,3 +86,6 @@ vconsole
 * shared resources (js/css/img/...)
 * resources: html, js, css, sass, less
 * CopyWebpackPlugin
+
+### Next generation
+* back to single page, plugin mode

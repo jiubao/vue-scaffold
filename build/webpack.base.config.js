@@ -40,7 +40,10 @@ module.exports = {
     }, {
       test: /\.js$/,
       loader: 'babel-loader',
-      include: [resolve('src'), resolve('test')]
+      include: [resolve('src'), resolve('test')],
+      // TODO: check node_modules
+      // In order to ensure JS transpilation is applied to Vue SFCs in node_modules, you need to whitelist them by using an exclude function instead
+      exclude: file => (/node_modules/.test(file) && !/\.vue\.js/.test(file))
     }, {
       test: /\.ejs$/,
       loader: 'ejs-compiled-loader',
